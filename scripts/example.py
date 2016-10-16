@@ -2,8 +2,8 @@ import os
 import sys
 import threading
 import time
-# sys.path.append('../')
-# from PPM_generator.ppmGenerator
+sys.path.append('../our_stuff')
+from PPM_generator.ppmGenerator
 
 
 # Center is set when you first double tap to unlock.

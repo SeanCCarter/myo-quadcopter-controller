@@ -1,10 +1,12 @@
 import math
 import pyaudio
 import threading
+import time
 
 class ppmGenerator (threading.Thread):
 
     def __init__(self):
+        threading.Thread.__init__(self)
         self.BITRATE = 44100 #number of frames per second/frameset.      
         self.MINVALUE = 0
         self.MAXVALUE = 255
@@ -18,7 +20,7 @@ class ppmGenerator (threading.Thread):
            rate = self.BITRATE, 
            output = True)
     def run(self):
-        while(true):
+        while(True):
             self.write()
 
     #writes the current frame to the stream
@@ -62,9 +64,9 @@ class ppmGenerator (threading.Thread):
 if __name__ == '__main__':
     print "hello world"
     g = ppmGenerator()
-    g.set_channel_values([2,1,2,1,2,1,2,1])
-    for x in range(0,300):
-        g.write()
-    g.set_channel_values([1,2,1,2,1,2,1,2])
-    for x in range(0,300):
-        g.write()
+    g.start()
+    while(True):
+        g.set_channel_values([2,1,2,1,2,1,2,1])
+        time.sleep(1)
+        g.set_channel_values([1,2,1,2,1,2,1,2])
+        time.sleep(1)

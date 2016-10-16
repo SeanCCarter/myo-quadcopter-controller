@@ -15,6 +15,7 @@ from PPM_generator import ppmGenerator
 comm = ppmGenerator()
 comm.set_channel_values([1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5])
 comm.start()
+throttle_center = False
 
 # Center is set when you first double tap to unlock.
 # It is kept unlocked forever
@@ -29,7 +30,7 @@ def onUnlock():
 def onPoseEdge(pose, edge):
 	if (pose == 'doubleTap') and (edge == "on"):
 		myo.rotSetCenter()
-		comm.throttle_center = myo.getRoll()
+		throttle_center = myo.getRoll()
 		myo.vibrate(3)
 
 
@@ -57,8 +58,8 @@ def onPeriodic():
 	#print comm.lengths
 	try:
 		#print myo.getRoll()
-		print comm.throttle_center
 		throttle_pos = (comm.throttle_center + myo.getRoll())
+		print throttle_pos
 	except:
 		pass
 

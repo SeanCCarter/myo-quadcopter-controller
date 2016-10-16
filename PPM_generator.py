@@ -11,6 +11,7 @@ class ppmGenerator:
         self.framemaker()
         PyAudio = pyaudio.PyAudio
         p = PyAudio()
+        print p.get_default_output_device_info()
         self.stream = p.open(format = p.get_format_from_width(1), 
            channels = 1, 
            rate = self.BITRATE, 
@@ -46,7 +47,7 @@ class ppmGenerator:
             r += self.pulsemaker(self.lengths[i])
         totallength += 1
         r += self.pulsemaker(1)
-        r += self.halfpulsemaker(19.2 - totallength,self.MAXVALUE)
+        r = self.halfpulsemaker(22.5 - totallength,128) + r
         self.frame = r
 
     def write_multiframe(self, n):
@@ -57,8 +58,9 @@ class ppmGenerator:
 if __name__ == '__main__':
     print "hello world"
     g = ppmGenerator()
-    g.set_channel_values([1,1.5,2,1.5,1.5,2,1.5,1])
-    g.write_multiframe(1000)
-    # for x in range(0,20000):
-    #     g.write()
-        #print "i wrote a stream"
+    g.set_channel_values([2,1,2,1,2,1,2,1])
+    for x in range(0,300):
+        g.write()
+    g.set_channel_values([1,2,1,2,1,2,1,2])
+    for x in range(0,300):
+        g.write()
